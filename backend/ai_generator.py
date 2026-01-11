@@ -15,14 +15,37 @@ model = genai.GenerativeModel("gemini-pro")
 
 def generate_caption(topic, tone):
     prompt = f"""
-    Generate a short, creative {tone} caption for a college event poster.
-    Topic: {topic}
-    Keep it natural, catchy, and student-friendly.
-    """
+You are a creative copywriter.
+
+Generate ONE short poster caption for a college event.
+
+Event topic: {topic}
+Tone: {tone}
+
+Rules:
+- Be creative and different every time
+- Do NOT repeat generic phrases
+- Do NOT use 'you shouldn't miss'
+- Keep it under 20 words
+- Sound natural and human
+
+Only return the caption text.
+"""
 
     try:
-        response = model.generate_content(prompt)
-        text = response.text.strip()
-        return text[:180]
-    except Exception:
-        return f"{topic} – An event you should not miss."
+        response = model.generate_content(
+            prompt,
+            generation_config={
+                "temperature": 0.9,
+                "max_output_tokens": 60
+            }
+        )
+
+        if not response.text:
+            raise ValueError("Empty AI response")
+
+        return response.text.strip()
+
+    except Exception as e:
+    print("Gemini error:", e)
+    return f"{topic}: Experience it differently."
