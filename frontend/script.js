@@ -1,4 +1,5 @@
-const BACKEND_URL = "http://127.0.0.1:7860";
+const BACKEND_URL = "https://anishrajigare-ai-meme-poster-backend.hf.space";
+
 
 function generatePoster() {
     const topic = document.getElementById("topic").value.trim();
