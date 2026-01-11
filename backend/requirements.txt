@@ -1,6 +1,5 @@
 flask
 flask-cors
 pillow
-gunicorn
 python-dotenv
 google-generativeai
