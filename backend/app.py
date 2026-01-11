@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, send_file
 from flask_cors import CORS
 from ai_generator import generate_caption
@@ -8,7 +9,7 @@ CORS(app)
 
 @app.route("/")
 def home():
-    return "Backend running with OpenAI"
+    return "Backend running"
 
 @app.route("/generate")
 def generate():
@@ -22,5 +23,5 @@ def generate():
     return send_file(image, mimetype="image/png")
 
 if __name__ == "__main__":
-    print("Starting Flask server...")
-    app.run(host="0.0.0.0", port=7860)
+    port = int(os.environ.get("PORT", 7860))
+    app.run(host="0.0.0.0", port=port)
