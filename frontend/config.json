@@ -1,0 +1,16 @@
+{
+  "app": {
+    "title": "AI Meme & Poster Generator",
+    "subtitle": "Generate creative posters using AI-powered captions"
+  },
+  "tones": [
+    { "value": "funny", "label": "Funny" },
+    { "value": "formal", "label": "Formal" },
+    { "value": "motivational", "label": "Motivational" }
+  ],
+  "templates": [
+    { "file": "poster1.png", "label": "Template 1" },
+    { "file": "poster2.png", "label": "Template 2" },
+    { "file": "poster3.png", "label": "Template 3" }
+  ]
+}

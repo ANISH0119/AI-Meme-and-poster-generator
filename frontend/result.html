@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generated Poster</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #eef2f3, #d9e2ec);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        img {
+            max-width: 100%;
+            margin-top: 20px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            margin-top: 25px;
+            padding: 10px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+        }
+
+        button:hover {
+            background-color: #1e4ed8;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Your Generated Poster</h1>
+    <div id="loading">Generating poster, please wait...</div>
+    <div id="result"></div>
+
+    <button onclick="goBack()">Generate Another</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
