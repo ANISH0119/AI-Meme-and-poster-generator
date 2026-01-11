@@ -2,33 +2,24 @@ from flask import Flask, request, send_file
 from flask_cors import CORS
 from ai_generator import generate_caption
 from image_generator import create_poster
-import os
 
 app = Flask(__name__)
 CORS(app)
 
 @app.route("/")
 def home():
-    return "Backend is running"
+    return "Backend running"
 
 @app.route("/generate")
 def generate():
-    print("REQUEST RECEIVED")
-
     topic = request.args.get("topic", "College Event")
     tone = request.args.get("tone", "formal")
     template = request.args.get("template", "poster1.png")
 
-    print("Params:", topic, tone, template)
-
     caption = generate_caption(topic, tone)
-    print("Caption:", caption)
+    image = create_poster(caption, template, tone)
 
-    image_buffer, saved_path = create_poster(caption, template, tone)
-    print("Image saved at:", saved_path)
-
-    return send_file(image_buffer, mimetype="image/png")
+    return send_file(image, mimetype="image/png")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=7860)
-
