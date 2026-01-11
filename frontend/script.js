@@ -1,4 +1,4 @@
-const BACKEND_URL = "https://YOUR-HF-SPACE.hf.space";
+const BACKEND_URL = "https://anishrajigare-ai-poster-backend.hf.space";
 
 function generatePoster() {
     const topic = document.getElementById("topic").value;
