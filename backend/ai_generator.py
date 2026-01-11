@@ -1,13 +1,16 @@
 import os
 import random
 
+client = None
+RateLimitError = Exception
+
 try:
     from openai import OpenAI, RateLimitError
-    OPENAI_KEY = os.getenv("OPENAI_API_KEY")
-    client = OpenAI(api_key=OPENAI_KEY) if OPENAI_KEY else None
-except Exception:
-    client = None
-    RateLimitError = Exception
+    api_key = os.getenv("OPENAI_API_KEY")
+    if api_key:
+        client = OpenAI(api_key=api_key)
+except Exception as e:
+    print("OpenAI disabled:", e)
 
 
 FALLBACK_CAPTIONS = {
@@ -35,7 +38,7 @@ FALLBACK_CAPTIONS = {
 }
 
 def generate_caption(topic, tone):
-    # Try OpenAI only if client exists
+    # Try OpenAI ONLY if client exists
     if client:
         try:
             prompt = f"""
@@ -58,12 +61,9 @@ Return ONLY the caption.
                 max_output_tokens=40
             )
             return response.output_text.strip()
-
-        except RateLimitError:
-            pass
         except Exception as e:
-            print("OpenAI error:", e)
+            print("OpenAI failed:", e)
 
-    # Fallback (always works)
+    # Always-safe fallback
     base = random.choice(FALLBACK_CAPTIONS.get(tone, FALLBACK_CAPTIONS["formal"]))
     return f"{topic}. {base}"
