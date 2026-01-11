@@ -1,8 +1,14 @@
 import os
 import random
-from openai import OpenAI, RateLimitError
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+try:
+    from openai import OpenAI, RateLimitError
+    OPENAI_KEY = os.getenv("OPENAI_API_KEY")
+    client = OpenAI(api_key=OPENAI_KEY) if OPENAI_KEY else None
+except Exception:
+    client = None
+    RateLimitError = Exception
+
 
 FALLBACK_CAPTIONS = {
     "funny": [
@@ -29,7 +35,10 @@ FALLBACK_CAPTIONS = {
 }
 
 def generate_caption(topic, tone):
-    prompt = f"""
+    # Try OpenAI only if client exists
+    if client:
+        try:
+            prompt = f"""
 Create ONE short, creative poster caption.
 
 Event: {topic}
@@ -42,22 +51,19 @@ Rules:
 - Natural language
 Return ONLY the caption.
 """
+            response = client.responses.create(
+                model="gpt-4.1-mini",
+                input=prompt,
+                temperature=0.8,
+                max_output_tokens=40
+            )
+            return response.output_text.strip()
 
-    try:
-        response = client.responses.create(
-            model="gpt-4.1-mini",
-            input=prompt,
-            temperature=0.8,
-            max_output_tokens=40
-        )
-        return response.output_text.strip()
+        except RateLimitError:
+            pass
+        except Exception as e:
+            print("OpenAI error:", e)
 
-    except RateLimitError:
-        # OpenAI quota exhausted → fallback
-        base = random.choice(FALLBACK_CAPTIONS.get(tone, FALLBACK_CAPTIONS["formal"]))
-        return f"{topic}. {base}"
-
-    except Exception as e:
-        print("OpenAI error:", e)
-        base = random.choice(FALLBACK_CAPTIONS["formal"])
-        return f"{topic}. {base}"
+    # Fallback (always works)
+    base = random.choice(FALLBACK_CAPTIONS.get(tone, FALLBACK_CAPTIONS["formal"]))
+    return f"{topic}. {base}"
