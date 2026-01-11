@@ -8,7 +8,7 @@ CORS(app)
 
 @app.route("/")
 def home():
-    return "Backend running"
+    return "Backend running with OpenAI"
 
 @app.route("/generate")
 def generate():
@@ -22,4 +22,5 @@ def generate():
     return send_file(image, mimetype="image/png")
 
 if __name__ == "__main__":
+    print("Starting Flask server...")
     app.run(host="0.0.0.0", port=7860)

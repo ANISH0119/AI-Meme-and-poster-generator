@@ -1,83 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>AI Meme & Poster Generator</title>
 
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #eef2f3, #d9e2ec);
-            margin: 0;
-            padding: 0;
+            background: #eef2f7;
+            padding: 40px;
         }
 
         .container {
             max-width: 700px;
-            margin: 60px auto;
+            margin: auto;
             background: white;
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
 
         label {
             font-weight: bold;
             display: block;
-            margin-top: 15px;
+            margin-top: 20px;
+            margin-bottom: 5px;
         }
 
         input, select {
             width: 100%;
-            padding: 10px;
-            margin-top: 8px;
+            padding: 12px;
+            font-size: 16px;
             border-radius: 6px;
             border: 1px solid #ccc;
+            background-color: #ffffff;
+            color: #000000;   /* 🔥 IMPORTANT */
+        }
+
+        /* 🔥 FIX DROPDOWN OPTIONS */
+        select option {
+            color: #000000;
+            background-color: #ffffff;
         }
 
         button {
             width: 100%;
             margin-top: 25px;
-            padding: 12px;
-            font-size: 16px;
-            cursor: pointer;
+            padding: 14px;
+            font-size: 18px;
             background-color: #2563eb;
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
+            cursor: pointer;
         }
 
         button:hover {
-            background-color: #1e4ed8;
+            background-color: #1e40af;
+        }
+
+        #status {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        img {
+            display: none;
+            margin-top: 25px;
+            max-width: 100%;
+            border-radius: 8px;
+            border: 1px solid #ccc;
         }
     </style>
 </head>
-
 <body>
 
 <div class="container">
-    <h1 id="appTitle"></h1>
-    <div class="subtitle" id="appSubtitle"></div>
+    <h2>AI Meme & Poster Generator</h2>
 
     <label>Topic / Event Name</label>
-    <input type="text" id="topic" placeholder="Example: Farewell Party">
+    <input id="topic" type="text" placeholder="Example: Farewell Party">
 
     <label>Tone</label>
-    <select id="tone"></select>
+    <select id="tone">
+        <option value="">Select Tone</option>
+        <option value="funny">Funny</option>
+        <option value="formal">Formal</option>
+        <option value="motivational">Motivational</option>
+    </select>
 
     <label>Template</label>
-    <select id="template"></select>
+    <select id="template">
+        <option value="">Select Template</option>
+        <option value="poster1.png">Poster 1</option>
+        <option value="poster2.png">Poster 2</option>
+        <option value="poster3.png">Poster 3</option>
+    </select>
 
-    <button onclick="goToResult()">Generate Poster</button>
+    <button onclick="generatePoster()">Generate Poster</button>
+
+    <p id="status"></p>
+    <img id="resultImage">
 </div>
 
 <script src="script.js"></script>

@@ -1,4 +1,4 @@
-const BACKEND_URL = "https://AnishRajigare-ai-poster-backend.hf.space";
+const BACKEND_URL = "http://127.0.0.1:7860";
 
 function generatePoster() {
     const topic = document.getElementById("topic").value.trim();
@@ -8,8 +8,8 @@ function generatePoster() {
     const img = document.getElementById("resultImage");
     const status = document.getElementById("status");
 
-    if (!topic) {
-        alert("Please enter a topic");
+    if (!topic || !tone || !template) {
+        alert("Please fill all fields");
         return;
     }
 
@@ -28,7 +28,7 @@ function generatePoster() {
     };
 
     img.onerror = () => {
-        status.innerText = "Failed to generate poster. Try again.";
+        status.innerText = "Failed to generate poster";
         img.style.display = "none";
     };
 
